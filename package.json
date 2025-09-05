@@ -1,5 +1,6 @@
 {
   "name": "01-fundamentos-nodejs",
+  "type": "module", 
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,6 +9,5 @@
   },
   "keywords": [],
   "author": "Jefferson Brandão",
-  "license": "ISC",
-  "type": "commonjs"
+  "license": "ISC"
 }

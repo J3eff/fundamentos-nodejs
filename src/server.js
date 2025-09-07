@@ -21,6 +21,8 @@ import http from 'http';
  *  // Stateless => Não possui estado (Back-end é stateless)
  * 
  * - Cabeçalos (Requisição/resposta) => Metadados
+ * 
+ * - HTTP Status Code => Indica se uma requisição foi bem sucedida ou não
  */
 
 const users = []
@@ -34,10 +36,10 @@ const server = http.createServer((req, res) => {
     if (method === 'POST' && url === '/users') {
         users.push({ id: 1, nome: 'Jonh Doe', email: 'jonhdoe@exemplo.com' });
 
-        return res.end('Criação de usuário')
+        return res.writeHead(201).end('Criação de usuário')
     }
 
-    return res.end('Hello World');
+    return res.writeHead(404).end();
 })
 
 server.listen(3333, () => console.log('Server running at http://localhost:3333'));

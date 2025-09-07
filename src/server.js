@@ -1,6 +1,7 @@
 // ESModules => import/export
 import http from 'http';
 import { json } from './middlewares/json.js';
+import { Database } from './database.js';
 
 /**
  * - Criar usuários (POST)
@@ -25,20 +26,25 @@ import { json } from './middlewares/json.js';
  * - HTTP Status Code => Indica se uma requisição foi bem sucedida ou não
  */
 
-const users = []
+const database = new Database();
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req;
 
     await json(req, res);
 
-    if (method === 'GET' && url === '/users')
+    if (method === 'GET' && url === '/users') {
+        const users = database.select('users');
+        
         return res.end(JSON.stringify(users));
+    }
 
     if (method === 'POST' && url === '/users') {
         const { name, email } = req.body;
 
-        users.push({ id: 1, name, email });
+        const user = { id: 1, name, email };
+
+        database.insert('users', user);
 
         return res.writeHead(201).end('Criação de usuário')
     }

@@ -1,8 +1,7 @@
 // ESModules => import/export
 import http from 'http';
 import { json } from './middlewares/json.js';
-import { Database } from './database.js';
-import { randomUUID } from 'node:crypto';
+import { routes } from './routes.js';
 
 /**
  * - Criar usuários (POST)
@@ -27,32 +26,15 @@ import { randomUUID } from 'node:crypto';
  * - HTTP Status Code => Indica se uma requisição foi bem sucedida ou não
  */
 
-const database = new Database();
 
 const server = http.createServer(async (req, res) => {
     const { method, url } = req;
 
     await json(req, res);
 
-    if (method === 'GET' && url === '/users') {
-        const users = database.select('users');
+    const route = routes.find(route => route.method === method && route.path === url);
 
-        return res.end(JSON.stringify(users));
-    }
-
-    if (method === 'POST' && url === '/users') {
-        const { name, email } = req.body;
-
-        const user = {
-            id: randomUUID(),
-            name,
-            email
-        };
-
-        database.insert('users', user);
-
-        return res.writeHead(201).end('Criação de usuário')
-    }
+    if(route) return route.handler(req, res);
 
     return res.writeHead(404).end();
 })

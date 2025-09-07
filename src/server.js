@@ -1,4 +1,3 @@
-//CommonJs -> Padrão de importação usando require
 // ESModules => import/export
 import http from 'http';
 

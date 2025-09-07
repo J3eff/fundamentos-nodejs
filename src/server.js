@@ -16,16 +16,26 @@ import http from 'http';
  *      PATCH => Atualizar uma informação especifica de um recurso no backend
  *      DELETE => Deletar uma recurso do no back-end
  *  - URL
+ * 
+ *  // Stateful => Possui estado
+ *  // Stateless => Não possui estado (Back-end é stateless)
+ * 
+ * - Cabeçalos (Requisição/resposta) => Metadados
  */
+
+const users = []
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
 
     if (method === 'GET' && url === '/users')
-        return res.end('Listagem de usuários');
+        return res.setHeader('Content-type', 'application/json').end(JSON.stringify(users));
 
-    if (method === 'POST' && url === '/users')
-        return res.end('Criação de usuário');
+    if (method === 'POST' && url === '/users') {
+        users.push({ id: 1, nome: 'Jonh Doe', email: 'jonhdoe@exemplo.com' });
+
+        return res.end('Criação de usuário')
+    }
 
     return res.end('Hello World');
 })

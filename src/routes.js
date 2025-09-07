@@ -28,5 +28,12 @@ export const routes = [
 
             return res.writeHead(201).end('Criação de usuário')
         }
+    },
+    {
+        method: 'DELETE',
+        path: '/users/:id',
+        handler: (req, res) => {
+
+        }
     }
 ]

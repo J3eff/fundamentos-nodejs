@@ -24,6 +24,10 @@ import { routes } from './routes.js';
  * - Cabeçalos (Requisição/resposta) => Metadados
  * 
  * - HTTP Status Code => Indica se uma requisição foi bem sucedida ou não
+ * 
+ *  Query parameters => Filtros, paginação, ordenação
+ *  Route parameters => Identificação de recurso
+ *  Request Body => Os dados para criação ou atualização de um recurso
  */
 
 

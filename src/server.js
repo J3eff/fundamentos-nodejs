@@ -2,6 +2,7 @@
 import http from 'http';
 import { json } from './middlewares/json.js';
 import { routes } from './routes.js';
+import { extractQueryParams } from './utils/extract-query-params.js';
 
 /**
  * - Criar usuários (POST)
@@ -43,7 +44,12 @@ const server = http.createServer(async (req, res) => {
 
     if (route) {
         const routerParams = req.url.match(route.path);
-        req.params = { ...routerParams.groups };
+
+        // console.log(extractQueryParams(routerParams.groups.query));
+        const { query, ...params } = routerParams.groups;
+
+        req.params = params;
+        req.query = query ? extractQueryParams(query) : {};
 
         return route.handler(req, res);
     }
